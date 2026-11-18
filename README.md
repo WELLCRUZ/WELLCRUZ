@@ -121,4 +121,5 @@ Aberto a conversas sobre oportunidades em dados, BI e análise de negócios.
 
 📧 wellingtonsscruz@gmail.com
 🔗 [linkedin.com/in/wellingtonsscruz](https://linkedin.com/in/wellingtonsscruz)
+    
     71981968653
