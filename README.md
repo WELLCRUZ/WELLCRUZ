@@ -119,7 +119,6 @@ Tenho facilidade para transitar entre times técnicos e de negócio, gerenciando
 
 Aberto a conversas sobre oportunidades em dados, BI e análise de negócios.
 
-📧 wellingtonsscruz@gmail.com
-🔗 [linkedin.com/in/wellingtonsscruz](https://linkedin.com/in/wellingtonsscruz)
-    
-    71981968653
+-📧 wellingtonsscruz@gmail.com
+-🔗 [linkedin.com/in/wellingtonsscruz](https://linkedin.com/in/wellingtonsscruz)
+- 📱 [(71) 98196-8653 (WhatsApp)](https://wa.me/5571981968653)
