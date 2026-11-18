@@ -1,87 +1,130 @@
-<h1 align="center">Wellington Cruz</h1>
-<h3 align="center">Analista de Dados & BI | Planejamento e PCM | Growth Analytics</h3>
+# 🥇 Pipeline Medallion no Azure Databricks (Bronze → Silver → Gold)
 
-<p align="center">
-  Transformo dados operacionais em decisões: dashboards, KPIs e automações que geram resultado.
-</p>
+Pipeline de dados ETL/ELT construído no **Azure Databricks**, seguindo a **Arquitetura Medallion**, com governança via **Unity Catalog** e armazenamento em **Delta Lake**. O projeto leva dados brutos até uma camada analítica pronta para consumo em BI.
 
-<p align="center">
-  <a href="https://linkedin.com/in/wellingtonsscruz"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
-  <a href="mailto:wellingtonsscruz@gmail.com"><img src="https://img.shields.io/badge/E--mail-EA4335?style=for-the-badge&logo=gmail&logoColor=white" alt="E-mail"/></a>
-</p>
+![Databricks](https://img.shields.io/badge/Databricks-FF3621?style=flat&logo=databricks&logoColor=white)
+![Azure](https://img.shields.io/badge/Azure-0078D4?style=flat&logo=microsoftazure&logoColor=white)
+![Delta Lake](https://img.shields.io/badge/Delta_Lake-00ADD4?style=flat&logo=delta&logoColor=white)
+![SQL](https://img.shields.io/badge/SQL-336791?style=flat&logo=postgresql&logoColor=white)
+![Power BI](https://img.shields.io/badge/Power_BI-F2C811?style=flat&logo=powerbi&logoColor=black)
 
----
-
-## 👋 Sobre mim
-
-Tenho mais de 9 anos de experiência em **planejamento, manutenção e análise de dados**, com passagem por hospital, indústria, serviços ambientais e telecomunicações. Hoje atuo como **Supervisor de Planejamento e Controle de Engenharia na Nova Corrente**, construindo KPIs, dashboards em Power BI e relatórios executivos para apoiar decisões de gestão.
-
-Meu foco é entregar **insight, não planilha**: identificar o problema nos números, propor o caminho e medir o resultado.
-
-- 🎓 Engenharia Elétrica (SENAI Estácio, conclusão prevista em 2026)
-- 🎓 Análise e Desenvolvimento de Sistemas (Estácio, 2025)
-- 🔧 Técnico em Mecatrônica (SENAI CIMATEC)
-- 📍 Salvador, BA
-- 🎯 Em busca de oportunidades em **Dados, BI, Growth Analytics, Planejamento e PCM**
+> ⚠️ Projeto de estudo e portfólio. Todos os dados são **fictícios ou públicos**, sem qualquer informação de empresas reais.
 
 ---
 
-## 🛠️ Ferramentas e Tecnologias
+## 🎯 Problema
 
-![Power BI](https://img.shields.io/badge/Power_BI-F2C811?style=for-the-badge&logo=powerbi&logoColor=black)
-![SQL](https://img.shields.io/badge/SQL-336791?style=for-the-badge&logo=postgresql&logoColor=white)
-![Excel](https://img.shields.io/badge/Excel-217346?style=for-the-badge&logo=microsoftexcel&logoColor=white)
-![SAP](https://img.shields.io/badge/SAP-0FAAFF?style=for-the-badge&logo=sap&logoColor=white)
-![Oracle](https://img.shields.io/badge/Oracle-F80000?style=for-the-badge&logo=oracle&logoColor=white)
-![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
+Dados operacionais chegam de forma bruta, com inconsistências (duplicidades, nulos, tipos incorretos e formatos diferentes), o que dificulta a criação de indicadores confiáveis. O objetivo é organizar esse fluxo em camadas, de modo que cada etapa aumente a qualidade e a confiabilidade dos dados.
 
----
+## 🏗️ Arquitetura
 
-## 📊 Competências
+```
+ Fonte (CSV/JSON)
+        │
+        ▼
+ ┌──────────────┐     ┌──────────────┐     ┌──────────────┐
+ │    BRONZE    │ ──▶ │    SILVER    │ ──▶ │     GOLD     │ ──▶  Power BI
+ │ Dado bruto   │     │ Limpo e      │     │ Agregado e   │
+ │ (como chegou)│     │ padronizado  │     │ regras de    │
+ │              │     │              │     │ negócio      │
+ └──────────────┘     └──────────────┘     └──────────────┘
+        Delta Lake  ·  Unity Catalog  ·  Azure
+```
 
-**Dados e Analytics**
-- Construção e monitoramento de KPIs
-- Dashboards e relatórios executivos (Power BI, DAX)
-- Excel avançado (Power Query, tabelas dinâmicas, automação)
-- SQL para extração e análise de dados
-- Análise de performance, funis e métricas de eficiência
-- Automação de relatórios e processos
-
-**Planejamento e PCM**
-- Manutenção preventiva, corretiva e preditiva
-- Indicadores: MTBF, MTTR e disponibilidade
-- Gestão de ordens de serviço, backlog e estoque técnico
-- TPM e melhoria contínua
-
----
-
-## 🚀 Projetos em destaque
-
-> Projetos construídos com dados fictícios ou públicos.
-
-| Projeto | O que faz | Ferramentas |
+| Camada | Objetivo | O que acontece |
 |---|---|---|
-| 📈 **Dashboard de KPIs de Manutenção** | Painel com MTBF, MTTR e disponibilidade de ativos | Power BI, DAX |
-| 🔍 **Análise de Funil e Performance** | Análise de conversão e identificação de gargalos | SQL, Excel |
-| ⚙️ **Automação de Relatórios** | Consolidação e atualização automática de relatórios gerenciais | Power Query, Python |
+| **Bronze** | Preservar o dado original | Ingestão sem alteração, com data de carga |
+| **Silver** | Qualidade e padronização | Remoção de duplicados, tratamento de nulos, ajuste de tipos |
+| **Gold** | Valor para o negócio | Agregações, CTEs e regras de negócio para indicadores |
 
-> 🔗 Em breve: links e prints de cada projeto.
+## 🧰 Tecnologias e conceitos aplicados
+
+- **Azure Databricks** como plataforma de processamento
+- **Unity Catalog:** catálogos, schemas, **External Locations** e volumes (externos e gerenciados)
+- **Delta Lake:** tabelas Delta criadas via SQL com External Location
+- **Arquitetura Medallion** com validação e dependências entre tasks
+- **Jobs e Pipelines:** Schedules & Triggers, notificações e gerenciamento de falhas
+- **SQL:** CTEs, criação de tabelas, filtros e transformações
+
+## 📁 Estrutura do repositório
+
+```
+pipeline-medallion-databricks/
+├── README.md
+├── notebooks/
+│   ├── 01_bronze_ingestao.sql
+│   ├── 02_silver_limpeza.sql
+│   └── 03_gold_indicadores.sql
+├── dados/
+│   └── amostra.csv
+├── docs/
+│   ├── arquitetura.png
+│   └── dicionario_de_dados.md
+└── imagens/
+    └── (prints do job e do dashboard)
+```
+
+## 🔄 Passo a passo
+
+1. **Estruturação do ambiente:** criação de container, catálogo, schemas e volumes no Unity Catalog
+2. **External Location:** configuração do acesso ao armazenamento no Azure
+3. **Bronze:** ingestão dos arquivos de origem em tabelas Delta, sem transformação
+4. **Silver:** limpeza, deduplicação, padronização de tipos e validações de qualidade
+5. **Gold:** construção de tabelas analíticas com CTEs e regras de negócio
+6. **Orquestração:** criação de Job com tasks dependentes (Bronze → Silver → Gold), agendamento (Schedule/Trigger) e notificação em caso de falha
+7. **Consumo:** conexão da camada Gold ao Power BI para visualização
+
+## 💻 Exemplo de código (camada Silver)
+
+> Ajuste os nomes de catálogo, schema e colunas para os do seu projeto.
+
+```sql
+CREATE OR REPLACE TABLE meu_catalogo.silver.vendas AS
+WITH base AS (
+  SELECT
+    CAST(id_pedido AS BIGINT)        AS id_pedido,
+    CAST(data_pedido AS DATE)        AS data_pedido,
+    UPPER(TRIM(categoria))           AS categoria,
+    CAST(valor AS DECIMAL(10,2))     AS valor,
+    ROW_NUMBER() OVER (
+      PARTITION BY id_pedido
+      ORDER BY data_carga DESC
+    ) AS rn
+  FROM meu_catalogo.bronze.vendas
+  WHERE id_pedido IS NOT NULL
+)
+SELECT id_pedido, data_pedido, categoria, valor
+FROM base
+WHERE rn = 1;
+```
+
+## 📊 Resultado
+
+- Camadas organizadas e rastreáveis, com separação clara entre dado bruto, tratado e analítico
+- Execução automatizada por Job, com agendamento e notificação de falhas
+- Camada Gold pronta para consumo em ferramentas de BI
+
+> 📸 Adicione aqui os prints do Job executado com sucesso e do dashboard no Power BI.
+
+## 📚 Aprendizados
+
+- Separar o dado em camadas facilita auditoria, reprocessamento e correção de erros
+- Definir dependências entre tasks evita que um dado inconsistente chegue ao consumo
+- Governar acesso e armazenamento no Unity Catalog desde o início simplifica a manutenção
+
+## 🔜 Próximos passos
+
+- [ ] Incluir testes automatizados de qualidade de dados
+- [ ] Adicionar carga incremental na camada Silver
+- [ ] Documentar o dicionário de dados completo
+- [ ] Publicar o dashboard final no Power BI
 
 ---
 
-## 💼 Experiência resumida
+## 👤 Autor
 
-- **Nova Corrente** | Supervisor de Planejamento e Controle de Engenharia (2025 – atual)
-- **Sotero Ambiental** | Encarregado de PCM (2025): 97% de disponibilidade média da frota
-- **Hospital Cardio Pulmonar, Rede D'Or** | Analista de Planejamento de Manutenção (2023 – 2025)
-- **Grupo CVLB, Le Biscuit** | Analista de Engenharia e Manutenção (2017 – 2023)
+**Wellington Cruz**
+Analista de Dados | BI | Negócios | Requisitos
 
----
-
-## 📫 Vamos conversar?
-
-Aberto a conversas sobre oportunidades e projetos com dados.
-
-📧 wellingtonsscruz@gmail.com
-🔗 [linkedin.com/in/wellingtonsscruz](https://linkedin.com/in/wellingtonsscruz)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://linkedin.com/in/wellingtonsscruz)
+[![E-mail](https://img.shields.io/badge/E--mail-EA4335?style=flat&logo=gmail&logoColor=white)](mailto:wellingtonsscruz@gmail.com)
